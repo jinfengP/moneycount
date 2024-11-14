@@ -1,0 +1,50 @@
+body {
+    background-image: url(count.png);
+    background-size:cover;
+    color:white;
+    font-family: Papyrus, fantasy;
+}
+h3 {
+    font-size:20px;
+}
+
+button {
+    font-size:12px;
+    font-family: Papyrus, fantasy;
+    color:white;
+    background-color: rgba(16, 111, 199, 1);
+    width:70px;
+    height:40px;
+    border-color:white;
+    border-radius:4px;
+}
+
+button:hover {
+    background-color: rgba(16, 111, 199, 0.6);
+    width:74px;
+    height:42px;
+}
+
+button:active {
+    background-color: rgba(16, 111, 199, 0.2);
+}
+
+#rm {
+    background-color: rgba(199, 16, 16, 1);
+}
+#rm:hover {
+    background-color: rgba(199, 16, 16, 0.6);
+}
+#rm:active {
+    background-color: rgba(199, 16, 16, 0.2);
+}
+
+#set {
+    background-color: rgba(2, 165, 165, 1);
+}
+#set:hover {
+    background-color: rgba(2, 165, 165, 0.6);
+}
+#set:active {
+    background-color: rgba(2, 165, 165, 0.2);
+}

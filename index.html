@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <title>Count De Money</title>
+  </head>
+
+  <body>
+<h1>I will help you Count your Coins</h1>
+<h3><span id="penny-count">0</span> Pennies</h3>
+<h3>Penny Value: $<span id="penny-value">0</span></h3>
+<button onclick="addPenny(1)">Add 1</button>
+<button onclick="addPenny(5)">Add 5</button>
+<button onclick="addPenny(-1)" id="rm">Remove 1</button>
+<button onclick="addPenny(-5)" id="rm">Remove 5</button>
+<button onclick="setCoin('p')" id="set">Set</button>
+
+
+<h3><span id="nickel-count">0</span> Nickels</h3>
+<h3>Nickel Value: $<span id="nickel-value">0</span></h3>
+<button onclick="addNickel(1)">Add 1</button>
+<button onclick="addNickel(5)">Add 5</button>
+<button onclick="addNickel(-1)" id="rm">Remove 1</button>
+<button onclick="addNickel(-5)" id="rm">Remove 5</button>
+<button onclick="setCoin('n')" id="set">Set</button>
+
+<h3><span id="dime-count">0</span> Dimes</h3>
+<h3>Dime Value: $<span id="dime-value">0</span></h3>
+<button onclick="addDime(1)">Add 1</button>
+<button onclick="addDime(5)">Add 5</button>
+<button onclick="addDime(-1)" id="rm">Remove 1</button>
+<button onclick="addDime(-5)" id="rm">Remove 5</button>
+<button onclick="setCoin('d')" id="set">Set</button>
+
+<h3><span id="quarter-count">0</span> Quarters</h3>
+<h3>Quarter Value: $<span id="quarter-value">0</span></h3>
+<button onclick="addQuarter(1)">Add 1</button>
+<button onclick="addQuarter(5)">Add 5</button>
+<button onclick="addQuarter(-1)" id="rm">Remove 1</button>
+<button onclick="addQuarter(-5)" id="rm">Remove 5</button>
+<button onclick="setCoin('q')" id="set">Set</button>
+
+
+<h2><span id="total-count">0</span> Coins</h2>
+<h2>Sum of Coin Value: $<span id="total-value">0</span></h2>
+
+
+  </body>
+
+  <script>
+    let pCount = 0;
+    let nCount = 0;
+    let dCount = 0;
+    let qCount = 0;
+    let pValue = 0;
+    let nValue = 0;
+    let dValue = 0;
+    let qValue = 0;
+    let totalCount = 0;  
+    let totalValue = 0;
+    if (localStorage.getItem("first") != null) {
+        retrieve();
+        updateValues();
+    }
+ 
+
+    function update() {
+        totalCount = parseInt(pCount) + parseInt(nCount) + parseInt(dCount) + parseInt(qCount);
+        document.getElementById("total-count").innerText = totalCount;
+        totalValue = parseFloat(pValue) + parseFloat(nValue) + parseFloat(dValue) + parseFloat(qValue);
+        totalValue = Math.round((totalValue+Number.EPSILON) * 100) / 100;
+        save();
+        document.getElementById("total-value").innerHTML = totalValue;
+        document.getElementById("penny-count").innerText = pCount;
+        document.getElementById("penny-value").innerText = pValue;
+        document.getElementById("nickel-count").innerText = nCount;
+        document.getElementById("nickel-value").innerText = nValue;
+        document.getElementById("dime-count").innerText = dCount;
+        document.getElementById("dime-value").innerText = dValue;
+        document.getElementById("quarter-count").innerText = qCount;
+        document.getElementById("quarter-value").innerText = qValue;
+        }
+    
+    function updateValues() {
+        pValue = pCount*0.01;
+        pValue = Math.round((pValue+Number.EPSILON) * 100) / 100;
+        
+        nValue= nCount*0.05;
+        nValue = Math.round((nValue+Number.EPSILON) * 100) / 100;
+        
+        dValue= dCount*0.1;
+        dValue = Math.round((dValue+Number.EPSILON) * 100) / 100;
+
+        qValue= qCount*0.25;
+        qValue = Math.round((qValue+Number.EPSILON) * 100) / 100;
+        
+        update();
+        }
+    function addPenny(num) {
+        if (pCount + num >= 0) {
+            pCount+= num;
+            updateValues();
+
+        } else {
+            alert("Number of coins cannot be negative!");
+        }
+    }
+    function addNickel(num) {
+        if (nCount + num >= 0) {
+            nCount+= num;
+            updateValues();
+
+        } else {
+            alert("Number of coins cannot be negative!");
+        }
+    }
+    function addDime(num) {
+        if (dCount + num >= 0) {
+            dCount+= num;
+         updateValues();
+        } else {
+            alert("Number of coins cannot be negative!");
+        }
+    }
+    function addQuarter(num) {
+        if (qCount + num >= 0) {
+            qCount+= num;
+            updateValues();
+        } else {
+            alert("Number of coins cannot be negative!");
+        }
+    }
+    function setCoin(coin) {
+        let num = prompt("How many coins would you like to set this to?");
+        num = parseInt(num);
+        if (Number.isInteger(num) && num >= 0) {
+            if (coin == "p") {
+                pCount = num;
+            } else if (coin == "n") {
+                nCount = num;
+            } else if (coin == "d") {
+                dCount = num;
+            } else if (coin == "q") {
+                qCount = num;
+            }
+        updateValues();
+        } else {
+            alert("Invalid response! Next time, enter a positive integer.");
+        }
+    }
+
+    function save() { // SAVES ALL CURRENT COIN COUNTS AND VALUES TO LOCAL STORAGE
+        localStorage.setItem("pc",pCount);
+        localStorage.setItem("nc",nCount);
+        localStorage.setItem("dc",dCount);
+        localStorage.setItem("qc",qCount);
+        localStorage.setItem("pv",pValue);
+        localStorage.setItem("nv",nValue);
+        localStorage.setItem("dv",dValue);
+        localStorage.setItem("qv",qValue);
+        localStorage.setItem("first",false);
+    }
+
+    function retrieve() { // TESTING
+    
+        pCount = JSON.parse(localStorage.getItem("pc"));
+        nCount = JSON.parse(localStorage.getItem("nc"));
+        dCount = JSON.parse(localStorage.getItem("dc"));
+        qCount = JSON.parse(localStorage.getItem("qc"));
+
+        pValue = JSON.parse(localStorage.getItem("pv"));
+        nValue = JSON.parse(localStorage.getItem("nv"));
+        dValue = JSON.parse(localStorage.getItem("dv"));
+        qValue = JSON.parse(localStorage.getItem("qv"));
+    }
+ </script>
+
+</html>
